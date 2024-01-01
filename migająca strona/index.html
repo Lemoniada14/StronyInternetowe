@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Migająca Strona z Muzyką i Latającymi Pop-up'ami</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            position: relative;
+            overflow: hidden;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            animation: migotanie-tla 1s infinite alternate;
+        }
+
+        .migajaca-strona {
+            text-align: center;
+        }
+
+        .migajaca-strona h1 {
+            font-size: 2em;
+            animation: zmiana-koloru 1s infinite alternate;
+        }
+
+        @keyframes migotanie-tla {
+            from {
+                background-color: #000;
+                color: #fff;
+            }
+            to {
+                background-color: #fff;
+                color: #000;
+            }
+        }
+
+        @keyframes zmiana-koloru {
+            from {
+                color: #fff;
+            }
+            to {
+                color: #000;
+            }
+        }
+
+        .popup {
+            position: absolute;
+            width: 200px;
+            height: 150px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            animation: latajacy-popup 5s linear infinite;
+            cursor: pointer;
+        }
+
+        @keyframes latajacy-popup {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(calc(var(--random-x) * (100vw - 200px)), calc(var(--random-y) * -100vh));
+            }
+            50% {
+                transform: translate(calc(var(--random-x) * (100vw - 200px)), calc(var(--random-y) * 100vh));
+            }
+            75% {
+                transform: translate(calc(var(--random-x) * -100vw), calc(var(--random-y) * 100vh));
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="migajaca-strona">
+        <div class="migajaca-strona">
+            <h1>Witaj na migającej stronie!</h1>
+            <audio id="muzyka" autoplay loop>
+                <source src="sciezka-do-twojej-muzyki.mp3" type="audio/mp3">
+                Twój przeglądarka nie obsługuje elementu audio.
+            </audio>
+        </div>
+        <h1>Witaj na migającej stronie!</h1>
+        <button id="playButton">Odtwórz muzykę</button>
+        <audio id="muzyka" loop>
+            <source src="sciezka-do-twojej-muzyki.mp3" type="audio/mp3">
+            Twój przeglądarka nie obsługuje elementu audio.
+        </audio>
+    </div>
+
+    <script>
+        document.getElementById('playButton').addEventListener('click', function() {
+            var audio = document.getElementById('muzyka');
+            audio.play();
+        });
+
+        // Funkcja do tworzenia i animowania pop-upów
+        function createPopup() {
+            var popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.innerHTML = '<p>To jest pop-up!</p>';
+            document.body.appendChild(popup);
+
+            // Przypisz losowe wartości do zmiennych --random-x i --random-y
+            popup.style.setProperty('--random-x', Math.random());
+            popup.style.setProperty('--random-y', Math.random());
+
+            // Otwórz nowe okno dla każdego pop-upu
+            popup.addEventListener('click', function() {
+                var popUpWindow = window.open('Index.html', 'PopUpWindow', 'height=300,width=400');
+                
+                // Dodaj animację do przesuwania okna
+                var interval = setInterval(function() {
+                    if (popUpWindow.closed) {
+                        clearInterval(interval);
+                        document.body.removeChild(popup);
+                    } else {
+                        var randomX = Math.random() * (window.innerWidth - 200);
+                        var randomY = Math.random() * window.innerHeight;
+                        popUpWindow.moveTo(randomX, randomY);
+                    }
+                }, 500);
+            });
+        }
+
+        // Otwórz latające pop-up'y co 5 sekund
+        setInterval(createPopup, 1);
+    </script>
+</body>
+</html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otwieranie Okienka</title>
+

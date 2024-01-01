@@ -1,0 +1,39 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #000; /* Czarne tło */
+    color: #fff; /* Biały tekst na czarnym tle */
+    animation: migotanie 1s infinite alternate;
+}
+
+.migajaca-strona {
+    text-align: center;
+}
+
+.migajaca-strona h1 {
+    font-size: 2em;
+    animation: zmiana-koloru 1s infinite alternate;
+}
+
+@keyframes migotanie {
+    from {
+        opacity: 1;
+        background-color: #000;
+    }
+    to {
+        opacity: 0.5;
+        background-color: #fff; /* Białe tło podczas migotania */
+    }
+}
+
+@keyframes zmiana-koloru {
+    from {
+        color: #fff; /* Biały tekst na początku animacji */
+    }
+    to {
+        color: #000; /* Czarny tekst podczas migotania */
+    }
+}
